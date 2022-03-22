@@ -2,6 +2,35 @@
   text-align: center;
 }
 
+
+html {
+  font-family: sans-serif;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+
+  background-image: url('./images/bg.png');
+  /* background-size: cover; */
+  background-repeat: repeat-y;
+  animation: slideleft 1000000s infinite  linear;
+  -webkit-animation: slideleft 100000s infinite linear;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes slideleft {
+  from {
+      background-position: 0%;
+  }
+  
+  to {
+      background-position: 90000%;
+  }
+}
+
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +64,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.formBlock {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
