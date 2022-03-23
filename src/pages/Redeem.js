@@ -48,7 +48,7 @@ export default function Redeem(props) {
       .get(BASE_URL + "/transfer/find/" + transferId, { headers: headers })
       .then((res) => {
         setTransfer(res.data.transfer);
-        setVerifyCode(res.data.code);
+        // setVerifyCode(res.data.code);
         if (res.data.transfer.redeemed) {
           alert("already redeemed");
           navigate("/");
@@ -165,7 +165,7 @@ export default function Redeem(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <h3>Verify code sent to email (filled in for you on test mode)</h3>
+          <h3>Verify code sent to email</h3>
           <h3>Your code is: {}</h3>
           <TextField
             type="text"
