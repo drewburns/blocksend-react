@@ -58,6 +58,7 @@ export default function Send() {
       <Grid item xs={6}>
         <Card className="sendBlock">
           <h3>Send</h3>
+          <h3><i>Subject to gas and tx fees</i></h3>
           <div className="formBlock">
             <TextField
               type="number"

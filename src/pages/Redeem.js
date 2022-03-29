@@ -24,22 +24,26 @@ import { GlobalContext } from "../utility/GlobalContext";
 
 export default function Redeem(props) {
   // const BASE_URL = "http://localhost:8080";
-  const BASE_URL = "https://fathomless-ravine-95441.herokuapp.com";
+  const BASE_URL = "https://blocksend-dev.herokuapp.com";
   const location = window.location;
   const transferId = location.pathname.split("/")[2];
   // const [amount, setAmount] = React.useState(25.0);
-  // const [email, setEmail] = React.useState("");
+  const [senderName, setSenderName] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [coins, setCoins] = React.useState(() => ["btc", "eth"]);
   const [amounts, setAmounts] = React.useState({});
   const [transfer, setTransfer] = React.useState({});
-  const [verifyCode, setVerifyCode] = React.useState({});
+  const [verifyCode, setVerifyCode] = React.useState("");
   const { state, setState } = React.useContext(GlobalContext);
   let navigate = useNavigate();
 
   React.useEffect(() => {
-    console.log("state", state);
-    fetchTransfer();
+    if (!props.fake) {
+      fetchTransfer();
+    } else {
+      setTransfer({ amount: 25 });
+      setSenderName("BlockSend");
+    }
   }, [state.jwt]);
 
   const fetchTransfer = () => {
@@ -47,9 +51,11 @@ export default function Redeem(props) {
     axios
       .get(BASE_URL + "/transfer/find/" + transferId, { headers: headers })
       .then((res) => {
+        console.log("data", res.data);
         setTransfer(res.data.transfer);
+        setSenderName(res.data.senderName);
         // setVerifyCode(res.data.code);
-        if (res.data.transfer.redeemed) {
+        if (res.data.transfer.redeemedAt) {
           alert("already redeemed");
           navigate("/");
         }
@@ -106,13 +112,27 @@ export default function Redeem(props) {
     return data;
   };
   const goToWallet = () => {
+    if (props.fake) {
+      navigate('/mock/wallet')
+      return;
+    }
     if (!state.jwt) {
       console.log("state: ", state);
+      sendCode();
       setOpen(true);
       return;
     }
     saveCoins(state.jwt);
     // navigate("/wallet");
+  };
+
+  const sendCode = () => {
+    axios
+      .post(BASE_URL + "/auth/code", { transferId: transfer.id })
+      .then((res) => {})
+      .catch((err) => {
+        alert("wrong email!");
+      });
   };
 
   const saveCoins = (token) => {
@@ -187,7 +207,7 @@ export default function Redeem(props) {
         <Grid item xs={6}>
           <Card>
             <h3>
-              {transfer.senderName} sent you ${transfer.amount}!
+              {senderName} sent you ${transfer.amount}!
             </h3>
             <p>
               <i>Pick the coins you'd like!</i>
