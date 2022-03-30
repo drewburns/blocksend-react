@@ -113,7 +113,7 @@ export default function Redeem(props) {
   };
   const goToWallet = () => {
     if (props.fake) {
-      navigate('/mock/wallet')
+      navigate('/demo/wallet')
       return;
     }
     if (!state.jwt) {

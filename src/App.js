@@ -12,25 +12,39 @@ import Login from "./pages/Login";
 function App() {
   const navigate = useNavigate();
   const { state, setState } = React.useContext(GlobalContext);
+  // if (window.location.pathname === "/mock/widget") {
+  //   return <Widget fake />;
+  // }
+
   return (
-    <Routes>
+    <div className="App">
       <Alert severity="warning">Test Mode, not real money!</Alert>
-      <div className="App">
-        <h1>BlockSend</h1>
-        <h3>
-          <i>Send USD. They pick the coins. </i>
-        </h3>
-        <Button onClick={() => navigate("/wallet")}>View my wallet</Button>
-        {state.jwt && <p>Logged in as {state.user.email}</p>}
+
+      {window.location.pathname !== "/demo/widget" && (
+        <React.Fragment>
+          <h1>BlockSend</h1>
+          <h3>
+            <i>Send USD. They pick the coins. </i>
+          </h3>
+          <Button onClick={() => navigate("/wallet")}>View my wallet</Button>
+          {state.jwt && <p>Logged in as {state.user.email}</p>}
+        </React.Fragment>
+      )}
+      {/* <Grid container>
+        <Grid item xs={3} />
+        <Grid item xs={6}></Grid>
+      </Grid> */}
+
+      <Routes>
         <Route exact path="/" element={<Wallet />} />
         <Route path="/redeem/:id" element={<Redeem />} />
-        <Route path="/mock/wallet" element={<Wallet fake />} />
-        <Route path="/mock/redeem" element={<Redeem fake />} />
+        <Route path="/demo/wallet" element={<Wallet fake />} />
+        <Route path="/demo/redeem" element={<Redeem fake />} />
+        <Route path="/demo/widget" element={<Widget fake />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/login" element={<Login />} />
-      </div>
-      <Route path="/mock/widget" element={<Widget fake />} />
-    </Routes>
+      </Routes>
+    </div>
   );
 }
 

@@ -22,7 +22,7 @@ export default function Widget() {
     // left: "50%",
     // transform: "translate(-50%, -50%)",
     width: 300,
-    minHeight: 300,
+    minHeight: 400,
     bgcolor: "background.paper",
     boxShadow: 24,
     p: 4,
@@ -42,15 +42,16 @@ export default function Widget() {
 
   const startScreen = (
     <React.Fragment>
-      <h1 style={{ margin: 0 }}>$120.00</h1>
+      <h1 style={{ margin: 0, fontSize: 50 }}>$120.00</h1>
       <p>Balance</p>
       <Button
         style={{
-          borderRadius: 10,
           fontSize: "17px",
-          color: "black",
-          backgroundColor: "orange",
+          color: "white",
+          height: 60,
+          backgroundColor: "#FD7F0C",
           marginTop: 40,
+          fontWeight: "bold",
         }}
         variant="contained"
         fullWidth
@@ -64,7 +65,7 @@ export default function Widget() {
   const payoutScreen = (
     <React.Fragment>
       <h1 style={{ margin: 0 }}>$120.00</h1>
-      <h3>Pay in: {coins.map((c) => c.toUpperCase()).join(", ")}</h3>
+      <h3>Widthraw in: {coins.map((c) => c.toUpperCase()).join(", ")}</h3>
       <i style={{ fontWeight: "lighter" }}>2.5% will be used for transaction</i>
       <b>
         <p>Will be deposited in your account instantly</p>
@@ -81,11 +82,12 @@ export default function Widget() {
       />
       <Button
         style={{
-          borderRadius: 10,
           fontSize: "17px",
-          color: "black",
-          backgroundColor: "orange",
+          color: "white",
+          height: 60,
+          backgroundColor: "#FD7F0C",
           marginTop: 30,
+          fontWeight: "bold",
         }}
         variant="contained"
         fullWidth
@@ -96,10 +98,10 @@ export default function Widget() {
 
       <Button
         fullWidth
-        style={{ marginTop: 30 }}
+        style={{ marginTop: 30, color: "black" }}
         onClick={() => setPhase("pickCoins")}
       >
-        Select Coins
+        Select Currency
       </Button>
     </React.Fragment>
   );
@@ -110,6 +112,21 @@ export default function Widget() {
       <h2 style={{ margin: 0 }}>
         You were paid $120.00 in {coins.map((c) => c.toUpperCase()).join(", ")}{" "}
       </h2>
+      <Button
+        style={{
+          fontSize: "17px",
+          color: "white",
+          height: 60,
+          fontWeight: "bold",
+          backgroundColor: "#FD7F0C",
+          marginTop: 30,
+        }}
+        variant="contained"
+        fullWidth
+        onClick={() => setPhase("start")}
+      >
+        Restart
+      </Button>
     </React.Fragment>
   );
 
@@ -153,8 +170,8 @@ export default function Widget() {
 
   const pickCoins = (
     <React.Fragment>
-      <h1>Pick your coins</h1>
-      <h2>Total: $120.00 USD</h2>
+      <h2 style={{ marginTop: 0, paddingTop: 0 }}>Pick your coins</h2>
+      <h4>Total: $120.00 USD</h4>
       <div className="formBlock">
         <ToggleButtonGroup
           value={coins}
@@ -202,10 +219,11 @@ export default function Widget() {
         </div>
         <Button
           style={{
-            borderRadius: 10,
             fontSize: "17px",
-            color: "black",
-            backgroundColor: "orange",
+            color: "white",
+            height: 60,
+            fontWeight: "bold",
+            backgroundColor: "#FD7F0C",
             marginTop: 30,
           }}
           variant="contained"
@@ -219,15 +237,17 @@ export default function Widget() {
   );
 
   return (
-    <Grid container>
-      <Grid item xs={4} />
+    <Grid container style={{ textAlign: "center", marginTop: 50 }}>
+      <Grid item xs={1} md={4} />
       <Grid
         item
-        xs={4}
+        xs={10}
+        md={4}
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          marginBottom: 50,
         }}
       >
         <Box sx={style}>
