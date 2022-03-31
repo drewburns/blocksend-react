@@ -121,10 +121,10 @@ export default function Wallet(props) {
           )}
         </Box>
       </Modal>
-      <Grid item xs={3} />
-      <Grid container xs={6}>
+      <Grid item md={3} xs={1} />
+      <Grid container md={6} xs={10}>
         {holdings.map((r) => (
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Card style={{ marginBottom: 20, height: 300 }}>
               <h3>{r.ticker.toUpperCase()}</h3>
               <img src={imageMap[r.ticker]} style={{ height: 50 }} />
