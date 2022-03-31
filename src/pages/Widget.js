@@ -10,6 +10,8 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { PieChart } from "react-minimal-pie-chart";
 import btc from "../images/btc.svg";
 import sol from "../images/sol.svg";
@@ -34,6 +36,7 @@ export default function Widget() {
   const [email, setEmail] = React.useState("");
   const [coins, setCoins] = React.useState(() => ["usdc"]);
   const [amounts, setAmounts] = React.useState({ usdc: 120 });
+  const [loading, setLoading] = React.useState(false);
 
   const handleCoins = (event, newFormats) => {
     setCoins(newFormats);
@@ -44,6 +47,16 @@ export default function Widget() {
     setAmounts(newAmounts);
   };
 
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+  const setNewPhase = async (newPhase) => {
+    setLoading(true);
+    await delay(1000);
+    // setLoading(true);
+    // setTimeout(function () {
+    setPhase(newPhase);
+    setLoading(false);
+    // }, 1000);
+  };
   const sendFakeEmail = () => {
     axios
       .post(BASE_URL + "/transfer/mockEmail", { coins: amounts, email })
@@ -60,6 +73,7 @@ export default function Widget() {
     <React.Fragment>
       <h1 style={{ margin: 0, fontSize: 50 }}>$120.00</h1>
       <p>Balance</p>
+      <ClipLoader color={"black"} loading={loading} size={75} />
       <Button
         style={{
           fontSize: "17px",
@@ -71,7 +85,7 @@ export default function Widget() {
         }}
         variant="contained"
         fullWidth
-        onClick={() => setPhase("payout")}
+        onClick={() => setNewPhase("payout")}
       >
         Payout with BlockSend
       </Button>
@@ -96,6 +110,7 @@ export default function Widget() {
         label="Wallet, email, or phone number"
         variant="outlined"
       />
+      <ClipLoader color={"black"} loading={loading} size={75} />
       <Button
         style={{
           fontSize: "17px",
@@ -108,7 +123,7 @@ export default function Widget() {
         variant="contained"
         fullWidth
         onClick={() => {
-          setPhase("paid");
+          setNewPhase("paid");
           sendFakeEmail();
         }}
       >
@@ -127,10 +142,12 @@ export default function Widget() {
 
   const paidScreen = (
     <React.Fragment>
-      <h1>Congrats!</h1>
       <h2 style={{ margin: 0 }}>
         You were paid $120.00 in {coins.map((c) => c.toUpperCase()).join(", ")}{" "}
       </h2>
+      <CheckCircleIcon
+        style={{ fontSize: 75, marginTop: 20, color: "green" }}
+      />
       <Button
         style={{
           fontSize: "17px",
@@ -191,6 +208,7 @@ export default function Widget() {
     <React.Fragment>
       <h2 style={{ marginTop: 0, paddingTop: 0 }}>Pick your coins</h2>
       <h4>Total: $120.00 USD</h4>
+      <ClipLoader color={"black"} loading={loading} size={75} />
       <div className="formBlock">
         <ToggleButtonGroup
           value={coins}

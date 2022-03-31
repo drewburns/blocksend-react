@@ -23,10 +23,9 @@ function App() {
       {window.location.pathname !== "/demo/widget" && (
         <React.Fragment>
           <h1>BlockSend</h1>
-          <h3>
-            <i>Send USD. They pick the coins. </i>
-          </h3>
-          <Button onClick={() => navigate("/wallet")}>View my wallet</Button>
+          <Button onClick={() => navigate("/wallet")}>
+            {state.jwt ? "View my wallet" : "Login to Wallet"}
+          </Button>
           {state.jwt && <p>Logged in as {state.user.email}</p>}
         </React.Fragment>
       )}
