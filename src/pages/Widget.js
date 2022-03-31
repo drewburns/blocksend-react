@@ -9,12 +9,15 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
+import axios from "axios";
 import { PieChart } from "react-minimal-pie-chart";
 import btc from "../images/btc.svg";
 import sol from "../images/sol.svg";
 import eth from "../images/eth.svg";
 import doge from "../images/doge.svg";
 import usdc from "../images/usdc.svg";
+const BASE_URL = "https://blocksend-dev.herokuapp.com";
+// const BASE_URL = "http://localhost:8080";
 export default function Widget() {
   const style = {
     // position: "absolute",
@@ -28,8 +31,9 @@ export default function Widget() {
     p: 4,
   };
   const [phase, setPhase] = React.useState("start");
+  const [email, setEmail] = React.useState("");
   const [coins, setCoins] = React.useState(() => ["usdc"]);
-  const [amounts, setAmounts] = React.useState({});
+  const [amounts, setAmounts] = React.useState({ usdc: 120 });
 
   const handleCoins = (event, newFormats) => {
     setCoins(newFormats);
@@ -38,6 +42,18 @@ export default function Widget() {
     const newAmounts = { ...amounts };
     newAmounts[coin] = newValue;
     setAmounts(newAmounts);
+  };
+
+  const sendFakeEmail = () => {
+    axios
+      .post(BASE_URL + "/transfer/mockEmail", { coins: amounts, email })
+      .then((res) => {
+        // navigate("/wallet");
+      })
+      .catch((err) => {
+        console.log(err);
+        // alert("not saved");
+      });
   };
 
   const startScreen = (
@@ -65,7 +81,7 @@ export default function Widget() {
   const payoutScreen = (
     <React.Fragment>
       <h1 style={{ margin: 0 }}>$120.00</h1>
-      <h3>Widthraw in: {coins.map((c) => c.toUpperCase()).join(", ")}</h3>
+      <h3>Withdraw in: {coins.map((c) => c.toUpperCase()).join(", ")}</h3>
       <i style={{ fontWeight: "lighter" }}>2.5% will be used for transaction</i>
       <b>
         <p>Will be deposited in your account instantly</p>
@@ -76,7 +92,7 @@ export default function Widget() {
         // value={verifyCode}
         placeholder="Your wallet, email, or phone number"
         // id="verifyCode"
-        // onChange={(e) => setVerifyCode(e.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
         label="Wallet, email, or phone number"
         variant="outlined"
       />
@@ -91,7 +107,10 @@ export default function Widget() {
         }}
         variant="contained"
         fullWidth
-        onClick={() => setPhase("paid")}
+        onClick={() => {
+          setPhase("paid");
+          sendFakeEmail();
+        }}
       >
         Confirm
       </Button>
@@ -205,7 +224,7 @@ export default function Widget() {
               {" "}
               <TextField
                 type="number"
-                // value={amount}
+                value={amounts[c]}
                 onChange={(e) => updateAmounts(e.target.value, c)}
                 id="outlined-basic"
                 label={`Amount of ${c.toUpperCase()}`}

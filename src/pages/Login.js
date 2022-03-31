@@ -40,57 +40,65 @@ export default function Login() {
   };
   return (
     <Grid container>
-      <Grid item xs={3} />
-      <Grid item xs={6}>
+      <Grid item md={3} xs={1} />
+      <Grid item md={6} xs={10}>
         <Card className="sendBlock">
-          <h3>Login</h3>
-          {codeSent ? (
-            <React.Fragment>
-              <div className="formBlock">
-                <TextField
-                  type="text"
-                  value={verifyCode}
-                  placeholder="123456"
-                  id="verifyCode"
-                  onChange={(e) => setVerifyCode(e.target.value)}
-                  label="Verify Code"
-                  variant="outlined"
-                />
-              </div>
-              <div className="formBlock">
-                <Button
-                  variant="contained"
-                  disabled={!verifyCode}
-                  onClick={verifyLogin}
-                >
-                  Verify
-                </Button>
-              </div>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <div className="formBlock">
-                <TextField
-                  type="email"
-                  value={email}
-                  placeholder="joe@smith.com"
-                  id="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  label="Email"
-                  variant="outlined"
-                />
-              </div>
-              <div className="formBlock">
-                <Button
-                  variant="contained"
-                  disabled={!email}
-                  onClick={sendCode}
-                >
-                  Login
-                </Button>
-              </div>
-            </React.Fragment>
-          )}
+          <Grid container>
+            <Grid item md={3} xs={1}></Grid>
+            <Grid item xs={10} md={6}>
+              <h3>Login</h3>
+              {codeSent ? (
+                <React.Fragment>
+                  <div className="formBlock">
+                    <TextField
+                      type="text"
+                      value={verifyCode}
+                      placeholder="123456"
+                      id="verifyCode"
+                      fullWidth
+                      onChange={(e) => setVerifyCode(e.target.value)}
+                      label="Verify Code"
+                      variant="outlined"
+                    />
+                  </div>
+                  <div className="formBlock">
+                    <Button
+                      variant="contained"
+                      disabled={!verifyCode}
+                      onClick={verifyLogin}
+                    >
+                      Verify
+                    </Button>
+                  </div>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <div className="formBlock">
+                    <TextField
+                      type="text"
+                      value={email}
+                      // style={{ paddingLeft: 80, paddingRight: 80 }}
+                      placeholder="joe@smith.com"
+                      fullWidth
+                      id="email"
+                      onChange={(e) => setEmail(e.target.value)}
+                      label="Email or Phone Number"
+                      variant="outlined"
+                    />
+                  </div>
+                  <div className="formBlock">
+                    <Button
+                      variant="contained"
+                      disabled={!email}
+                      onClick={sendCode}
+                    >
+                      Login
+                    </Button>
+                  </div>
+                </React.Fragment>
+              )}
+            </Grid>
+          </Grid>
         </Card>
       </Grid>
     </Grid>
