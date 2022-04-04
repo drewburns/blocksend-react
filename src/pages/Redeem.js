@@ -23,8 +23,8 @@ import usdc from "../images/usdc.svg";
 import { GlobalContext } from "../utility/GlobalContext";
 
 export default function Redeem(props) {
-  const BASE_URL = "http://localhost:8080";
-  // const BASE_URL = "https://blocksend-dev.herokuapp.com";
+  // const BASE_URL = "http://localhost:8080";
+  const BASE_URL = "https://blocksend-dev.herokuapp.com";
   const location = window.location;
   const transferId = location.pathname.split("/")[2];
   // const [amount, setAmount] = React.useState(25.0);

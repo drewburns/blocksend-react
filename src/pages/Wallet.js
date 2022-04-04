@@ -23,8 +23,8 @@ export default function Wallet(props) {
   const [withdrawHolding, setWithdrawHolding] = React.useState(null);
   const { state, setState } = React.useContext(GlobalContext);
   const [showLogin, setShowLogin] = React.useState(false);
-  const BASE_URL = "http://localhost:8080";
-  // const BASE_URL = "https://blocksend-dev.herokuapp.com";
+  // const BASE_URL = "http://localhost:8080";
+  const BASE_URL = "https://blocksend-dev.herokuapp.com";
   const [holdings, setHoldings] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   let navigate = useNavigate();
