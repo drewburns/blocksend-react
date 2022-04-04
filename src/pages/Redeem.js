@@ -23,8 +23,8 @@ import usdc from "../images/usdc.svg";
 import { GlobalContext } from "../utility/GlobalContext";
 
 export default function Redeem(props) {
-  // const BASE_URL = "http://localhost:8080";
-  const BASE_URL = "https://blocksend-dev.herokuapp.com";
+  const BASE_URL = "http://localhost:8080";
+  // const BASE_URL = "https://blocksend-dev.herokuapp.com";
   const location = window.location;
   const transferId = location.pathname.split("/")[2];
   // const [amount, setAmount] = React.useState(25.0);
@@ -41,7 +41,7 @@ export default function Redeem(props) {
     if (!props.fake) {
       fetchTransfer();
     } else {
-      setTransfer({ amount: 25 });
+      setTransfer({ amount: 2500 });
       setSenderName("BlockSend");
     }
   }, [state.jwt]);
@@ -68,20 +68,20 @@ export default function Redeem(props) {
 
   const remaining = () => {
     if (Object.values(amounts).length === 0) {
-      return transfer.amount;
+      return (transfer.amount / 100).toFixed(2);
     }
-    return (
-      transfer.amount -
-      Object.values(amounts).reduce((a, b) => parseFloat(a) + parseFloat(b))
-    );
+    const centsRemaining =
+      transfer.amount - Object.values(amounts).reduce((a, b) => a + b);
+    return (centsRemaining / 100).toFixed(2);
   };
   const handleCoins = (event, newFormats) => {
     setCoins(newFormats);
   };
   const updateAmounts = (newValue, coin) => {
     const newAmounts = { ...amounts };
-    newAmounts[coin] = newValue;
+    newAmounts[coin] = newValue * 100;
     setAmounts(newAmounts);
+    console.log("coins:", newAmounts);
   };
 
   const getData = () => {
@@ -113,7 +113,7 @@ export default function Redeem(props) {
   };
   const goToWallet = () => {
     if (props.fake) {
-      navigate('/demo/wallet')
+      navigate("/demo/wallet");
       return;
     }
     if (!state.jwt) {
@@ -207,7 +207,7 @@ export default function Redeem(props) {
         <Grid item xs={6}>
           <Card>
             <h3>
-              {senderName} sent you ${transfer.amount}!
+              {senderName} sent you ${(transfer.amount / 100).toFixed(2)}!
             </h3>
             <p>
               <i>Pick the coins you'd like!</i>

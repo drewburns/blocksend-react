@@ -8,6 +8,7 @@ import usdc from "../images/usdc.svg";
 import { GlobalContext } from "../utility/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Login from "./Login";
 const data = [
   { coin: "btc", amount: "0.01", value: "$50", img: btc },
   { coin: "sol", amount: "0.01", value: "$20", img: sol },
@@ -21,8 +22,9 @@ export default function Wallet(props) {
   const [wallet, setWallet] = React.useState("");
   const [withdrawHolding, setWithdrawHolding] = React.useState(null);
   const { state, setState } = React.useContext(GlobalContext);
-  // const BASE_URL = "http://localhost:8080";
-  const BASE_URL = "https://blocksend-dev.herokuapp.com";
+  const [showLogin, setShowLogin] = React.useState(false);
+  const BASE_URL = "http://localhost:8080";
+  // const BASE_URL = "https://blocksend-dev.herokuapp.com";
   const [holdings, setHoldings] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   let navigate = useNavigate();
@@ -44,9 +46,11 @@ export default function Wallet(props) {
       .get(BASE_URL + "/wallet", { headers: headers })
       .then((res) => {
         setHoldings(res.data);
+        setShowLogin(false);
       })
       .catch((err) => {
-        navigate("/login");
+        // navigate("/login");
+        setShowLogin(true);
       });
   };
 
@@ -94,6 +98,10 @@ export default function Wallet(props) {
     p: 4,
   };
 
+  if (showLogin) {
+    return <Login />;
+  }
+
   return (
     <Grid container>
       <Modal
@@ -135,7 +143,7 @@ export default function Wallet(props) {
               <h3>{r.ticker.toUpperCase()}</h3>
               <img src={imageMap[r.ticker]} style={{ height: 50 }} />
               <h3>
-                Amount: {r.amount} (${r.price})
+                Amount: {r.amount.toFixed(5)} (${(r.price / 100).toFixed(2)})
               </h3>
               <Button
                 style={{ marginBottom: 20 }}

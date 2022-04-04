@@ -18,8 +18,8 @@ import sol from "../images/sol.svg";
 import eth from "../images/eth.svg";
 import doge from "../images/doge.svg";
 import usdc from "../images/usdc.svg";
-const BASE_URL = "https://blocksend-dev.herokuapp.com";
-// const BASE_URL = "http://localhost:8080";
+// const BASE_URL = "https://blocksend-dev.herokuapp.com";
+const BASE_URL = "http://localhost:8080";
 export default function Widget() {
   const style = {
     // position: "absolute",
@@ -35,7 +35,7 @@ export default function Widget() {
   const [phase, setPhase] = React.useState("start");
   const [email, setEmail] = React.useState("");
   const [coins, setCoins] = React.useState(() => ["usdc"]);
-  const [amounts, setAmounts] = React.useState({ usdc: 120 });
+  const [amounts, setAmounts] = React.useState({});
   const [loading, setLoading] = React.useState(false);
 
   const handleCoins = (event, newFormats) => {
@@ -43,7 +43,7 @@ export default function Widget() {
   };
   const updateAmounts = (newValue, coin) => {
     const newAmounts = { ...amounts };
-    newAmounts[coin] = newValue;
+    newAmounts[coin] = newValue * 100;
     setAmounts(newAmounts);
   };
 
@@ -168,12 +168,10 @@ export default function Widget() {
 
   const remaining = () => {
     if (Object.values(amounts).length === 0) {
-      return 120;
+      return (12000 / 100).toFixed(2);
     }
-    return (
-      120 -
-      Object.values(amounts).reduce((a, b) => parseFloat(a) + parseFloat(b))
-    );
+    const amount = 12000 - Object.values(amounts).reduce((a, b) => a + b);
+    return (amount / 100).toFixed(2);
   };
 
   const getData = () => {
@@ -234,7 +232,11 @@ export default function Widget() {
           </ToggleButton>
         </ToggleButtonGroup>
         <div className="formBlock">
-          <PieChart style={{ height: 100 }} data={getData()} totalValue={120} />
+          <PieChart
+            style={{ height: 100 }}
+            data={getData()}
+            totalValue={12000}
+          />
         </div>
         <div>
           {coins.map((c) => (
@@ -242,7 +244,7 @@ export default function Widget() {
               {" "}
               <TextField
                 type="number"
-                value={amounts[c]}
+                // value={(amounts[c] / 100).toFixed(2)}
                 onChange={(e) => updateAmounts(e.target.value, c)}
                 id="outlined-basic"
                 label={`Amount of ${c.toUpperCase()}`}
