@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div className="App">
-      <Alert severity="warning">Test Mode, not real money!</Alert>
+      {/* <Alert severity="warning">Test Mode, not real money!</Alert> */}
 
       {window.location.pathname !== "/demo/widget" && (
         <React.Fragment>
