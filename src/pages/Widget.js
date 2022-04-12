@@ -18,7 +18,7 @@ import sol from "../images/sol.svg";
 import eth from "../images/eth.svg";
 import doge from "../images/doge.svg";
 import usdc from "../images/usdc.svg";
-const BASE_URL = "https://blocksend-dev.herokuapp.com";
+// const BASE_URL = "https://blocksend-dev.herokuapp.com";
 // const BASE_URL = "http://localhost:8080";
 export default function Widget() {
   const style = {

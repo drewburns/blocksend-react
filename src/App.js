@@ -37,9 +37,9 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Wallet />} />
         <Route path="/redeem/:id" element={<Redeem />} />
-        <Route path="/demo/wallet" element={<Wallet fake />} />
-        <Route path="/demo/redeem" element={<Redeem fake />} />
-        <Route path="/demo/widget" element={<Widget fake />} />
+        {/* <Route path="/demo/wallet" element={<Wallet fake />} /> */}
+        {/* <Route path="/demo/redeem" element={<Redeem fake />} /> */}
+        {/* <Route path="/demo/widget" element={<Widget fake />} /> */}
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/login" element={<Login />} />
       </Routes>

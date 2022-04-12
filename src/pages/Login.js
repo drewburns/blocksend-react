@@ -5,7 +5,8 @@ import { GlobalContext } from "../utility/GlobalContext";
 import { useNavigate } from "react-router-dom";
 export default function Login() {
   // const BASE_URL = "http://localhost:8080";
-  const BASE_URL = "https://blocksend-dev.herokuapp.com";
+  // const BASE_URL = "https://blocksend-dev.herokuapp.com";
+  const BASE_URL = "https://api.blocksend.co";
   const [email, setEmail] = React.useState("");
   const [verifyCode, setVerifyCode] = React.useState("");
   const [codeSent, setCodeSent] = React.useState(false);
