@@ -4,8 +4,8 @@ import axios from "axios";
 import { GlobalContext } from "../utility/GlobalContext";
 import { useNavigate } from "react-router-dom";
 export default function Login(props) {
-  const BASE_URL = "http://localhost:8080";
-  // const BASE_URL = "https://blocksend-dev.herokuapp.com";
+  // const BASE_URL = "http://localhost:8080";
+  const BASE_URL = "https://blocksend-dev.herokuapp.com";
   const [email, setEmail] = React.useState("");
   const [verifyCode, setVerifyCode] = React.useState("");
   const [codeSent, setCodeSent] = React.useState(false);
