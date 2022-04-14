@@ -8,7 +8,7 @@ import Checkout from "./Checkout";
 
 export default function Send(props) {
   // const BASE_URL = "http://localhost:8080";
-  const BASE_URL = "https://fathomless-ravine-95441.herokuapp.com";
+  const BASE_URL = "https://blocksend-dev.herokuapp.com";
   let navigate = useNavigate();
   const [amount, setAmount] = React.useState(25.0);
   const [email, setEmail] = React.useState("");
