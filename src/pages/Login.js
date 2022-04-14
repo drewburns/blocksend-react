@@ -3,36 +3,51 @@ import { Card, Grid, Button, TextField } from "@mui/material";
 import axios from "axios";
 import { GlobalContext } from "../utility/GlobalContext";
 import { useNavigate } from "react-router-dom";
-export default function Login() {
-  // const BASE_URL = "http://localhost:8080";
-  const BASE_URL = "https://blocksend-dev.herokuapp.com";
+export default function Login(props) {
+  const BASE_URL = "http://localhost:8080";
+  // const BASE_URL = "https://blocksend-dev.herokuapp.com";
   const [email, setEmail] = React.useState("");
   const [verifyCode, setVerifyCode] = React.useState("");
   const [codeSent, setCodeSent] = React.useState(false);
   const [userId, setUserId] = React.useState(null);
   const { state, setState } = React.useContext(GlobalContext);
   let navigate = useNavigate();
+  const ISADMIN = props.admin;
 
   const sendCode = () => {
     setCodeSent(true);
+    const url = ISADMIN ? "/auth/admin/code" : "/auth/code";
     axios
-      .post(BASE_URL + "/auth/code", { email })
+      .post(BASE_URL + url, { email })
       .then((res) => {
         setCodeSent(true);
-        setUserId(res.data.userId);
+        setUserId(res.data.userId || res.data.accountId);
       })
       .catch((err) => {
         alert("wrong email!");
+        setEmail("");
       });
   };
 
   const verifyLogin = () => {
+    const url = ISADMIN ? "/auth/admin/login" : "/auth/login";
+    const data = ISADMIN
+      ? { accountId: userId, verifyCode }
+      : { userId: userId, verifyCode };
     axios
-      .post(BASE_URL + "/auth/login", { userId: userId, verifyCode })
+      .post(BASE_URL + url, data)
       .then((res) => {
-        setState({ jwt: res.data.token, user: res.data.user });
-        localStorage.setItem("id_token", res.data.token);
-        navigate("/wallet");
+        if (res.data.account) {
+          setState({ jwt: res.data.token, account: res.data.account });
+          localStorage.setItem("id_token_acc", res.data.token);
+          localStorage.removeItem("id_token");
+          navigate("/admin");
+        } else {
+          setState({ jwt: res.data.token, user: res.data.user });
+          localStorage.setItem("id_token", res.data.token);
+          localStorage.removeItem("id_token_acc");
+          navigate("/wallet");
+        }
       })
       .catch((err) => {
         alert("wrong code!");
@@ -46,7 +61,7 @@ export default function Login() {
           <Grid container>
             <Grid item md={3} xs={1}></Grid>
             <Grid item xs={10} md={6}>
-              <h3>Login</h3>
+              <h3>{ISADMIN ? "Admin Login" : "User Login"}</h3>
               {codeSent ? (
                 <React.Fragment>
                   <div className="formBlock">
@@ -82,7 +97,7 @@ export default function Login() {
                       fullWidth
                       id="email"
                       onChange={(e) => setEmail(e.target.value)}
-                      label="Email or Phone Number"
+                      label={ISADMIN ? "Email" : "Email or Phone Number"}
                       variant="outlined"
                     />
                   </div>

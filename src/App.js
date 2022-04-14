@@ -8,6 +8,7 @@ import Wallet from "./pages/Wallet";
 import Widget from "./pages/Widget";
 import { GlobalContext } from "./utility/GlobalContext";
 import Login from "./pages/Login";
+import Admin from "./pages/Admin";
 
 function App() {
   const navigate = useNavigate();
@@ -16,17 +17,46 @@ function App() {
   //   return <Widget fake />;
   // }
 
+  const logout = () => {
+    setState({ jwt: "", user: {}, account: {}, currentUserId: null });
+    localStorage.removeItem("id_token");
+    localStorage.removeItem("id_token_acc");
+  };
+
+  const getButtonLabel = () => {
+    if (state.jwt) {
+      if (state.account && state.account.id) {
+        return "Admin Home";
+      }
+      return "View my wallet";
+    } else {
+      return "Login to Wallet";
+    }
+  };
+
+  const getDestination = () => {
+    if (state.jwt) {
+      if (state.account && state.account.id) {
+        navigate("/admin");
+        return;
+      }
+      navigate("/wallet");
+      return;
+    }
+    navigate("/wallet");
+  };
   return (
     <div className="App">
       <Alert severity="warning">Test Mode, not real money!</Alert>
-
       {window.location.pathname !== "/demo/widget" && (
         <React.Fragment>
           <h1>BlockSend</h1>
-          <Button onClick={() => navigate("/wallet")}>
-            {state.jwt ? "View my wallet" : "Login to Wallet"}
-          </Button>
-          {state.jwt && <p>Logged in as {state.user.email}</p>}
+          <Button onClick={() => getDestination()}>{getButtonLabel()}</Button>
+          {!state.jwt && (
+            <Button onClick={() => navigate("/adminLogin")}>Admin Login</Button>
+          )}
+          {state.jwt && <Button onClick={() => logout()}>Logout</Button>}
+          {/* {state.jwt && <p>Logged in as {state.user.email}</p>} */}
         </React.Fragment>
       )}
       {/* <Grid container>
@@ -42,6 +72,8 @@ function App() {
         <Route path="/demo/widget" element={<Widget fake />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/adminLogin" element={<Login admin />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </div>
   );
