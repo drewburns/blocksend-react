@@ -21,6 +21,7 @@ function App() {
     setState({ jwt: "", user: {}, account: {}, currentUserId: null });
     localStorage.removeItem("id_token");
     localStorage.removeItem("id_token_acc");
+    navigate("/login")
   };
 
   const getButtonLabel = () => {
