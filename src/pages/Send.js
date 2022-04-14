@@ -45,6 +45,7 @@ export default function Send(props) {
       })
       .catch((err) => {
         alert("Error! Contact support");
+        console.log("ERROR: ", err);
         setLoading(false);
         if (err.response.status === 403 || err.response.status === 401) {
           navigate("/adminLogin");

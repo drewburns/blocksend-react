@@ -25,6 +25,7 @@ export default function Login(props) {
       })
       .catch((err) => {
         alert("wrong email!");
+        setCodeSent(false);
         setEmail("");
       });
   };

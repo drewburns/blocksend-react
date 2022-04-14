@@ -15,7 +15,7 @@ export default function Admin() {
   const [receieverEmail, setReceiverEmail] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
-//   const BASE_URL = "http://localhost:8080";
+  //   const BASE_URL = "http://localhost:8080";
   const BASE_URL = "https://blocksend-dev.herokuapp.com";
 
   React.useEffect(() => {
@@ -28,10 +28,10 @@ export default function Admin() {
       .catch((err) => {
         // handle 400 errors
         if (err.response.status === 403 || err.response.status === 401) {
-          localStorage.removeItem("id_token_acc");
-          setState({ jwt: null, account: {} });
-          navigate("/adminLogin");
-          alert("Login again");
+          //   localStorage.removeItem("id_token_acc");
+          //   setState({ jwt: null, account: {} });
+          //   navigate("/adminLogin");
+          //   alert("Login again");
         }
       });
     getTransfers();
@@ -47,10 +47,10 @@ export default function Admin() {
       .catch((err) => {
         // handle 400 errors
         if (err.response.status === 403 || err.response.status === 401) {
-          localStorage.removeItem("id_token_acc");
-          setState({ jwt: null, account: {} });
-          navigate("/adminLogin");
-          alert("Login again");
+        //   localStorage.removeItem("id_token_acc");
+        //   setState({ jwt: null, account: {} });
+        //   navigate("/adminLogin");
+        //   alert("Login again");
         }
       });
   };
