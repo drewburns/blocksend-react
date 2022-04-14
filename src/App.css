@@ -65,3 +65,7 @@ html {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.adminBlock {
+  min-height: 200px;
+}

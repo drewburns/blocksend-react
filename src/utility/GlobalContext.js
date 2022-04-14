@@ -7,7 +7,13 @@ const GlobalContext = React
   //   (null as unknown) as ContextProps
   ();
 
-const initialState = { jwt: "", loading: true, user: {}, currentUserID: null };
+const initialState = {
+  jwt: "",
+  loading: true,
+  user: {},
+  currentUserID: null,
+  account: {},
+};
 
 const GlobalContextProvider = (props) => {
   const [state, setState] = useState(initialState);
@@ -16,6 +22,7 @@ const GlobalContextProvider = (props) => {
     (async () => {
       // localStorage.removeItem("id_token");
       const value = localStorage.getItem("id_token");
+      console.log("LCOAL STORAGE, ", value);
       if (value !== null) {
         const decodedToken = jwtDecode(value, { header: false });
         const currentUserID = decodedToken.id;
@@ -25,13 +32,21 @@ const GlobalContextProvider = (props) => {
           loading: false,
           currentUserID: currentUserID,
         });
-      } else {
+        return;
+      }
+
+      const valueAcc = localStorage.getItem("id_token_acc");
+      console.log("account storage", valueAcc);
+      if (valueAcc !== null) {
+        const decodedToken = jwtDecode(valueAcc, { header: false });
+        const currentAccountID = decodedToken.id;
         setState({
+          jwt: valueAcc,
+          account: decodedToken,
           loading: false,
+          currentAccountID: currentAccountID,
         });
       }
-      // If you want to also store it in async storage,
-      // you could always access it here and set the jwt in state
     })();
   }, []);
 
