@@ -63,7 +63,7 @@ export default function Send(props) {
         <h3>Success! Sent to {email}</h3>
         <p>
           <i style={{ marginBottom: 30 }}>
-            Link: https://blocksend.co/redeem/{transferLink}
+            Link: https://app.blocksend.co/redeem/{transferLink}
           </i>
         </p>
         <Button variant="contained" onClick={() => restart()}>
