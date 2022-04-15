@@ -30,6 +30,9 @@ export default function Wallet(props) {
   const [loading, setLoading] = React.useState(false);
   let navigate = useNavigate();
   React.useEffect(() => {
+    if (state.account &&state.account.id) {
+      navigate("/admin")
+    }
     getHoldings();
   }, [state.jwt]);
 

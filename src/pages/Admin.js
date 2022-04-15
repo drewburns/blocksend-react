@@ -55,11 +55,55 @@ export default function Admin() {
         }
       });
   };
+  const gridHeaders = (
+    <React.Fragment>
+      <Grid container>
+        <Grid item xs={3}>
+          <b>Date</b>
+        </Grid>
+        <Grid item xs={5}>
+          <b> Description</b>
+        </Grid>
+        <Grid item xs={2}>
+          <b>Amount</b>
+        </Grid>
+        <Grid item xs={2}>
+          <b>Redeemed?</b>
+        </Grid>
+      </Grid>
+    </React.Fragment>
+  )
 
+  const renderRow = (t) => {
+    return (
+      <Grid container style={{ height: 50, backgroundColor: "#E5F6DF", justifyContent: "center", display: 'flex', alignItems: "center" }}>
+        <Grid item xs={3}>
+          {new Date(t.createdAt).toLocaleDateString()}
+        </Grid>
+        <Grid item xs={5}>
+          Transfer to {t.User.name} at {t.User.email}
+        </Grid>
+        <Grid item xs={2}>
+          ${(t.amount / 100).toFixed(2)}
+        </Grid>
+        <Grid item xs={2}>
+          {t.redeemedAt ? "✅" : "⏱"}
+        </Grid>
+        {/* <p>Link: app.blocksend.co/redeem/{t.link}</p> */}
+      </Grid >)
+  }
   const subtractBalance = (amount) => {
     getTransfers();
     setAccount({ ...account, balance: account.balance - amount });
   };
+
+  const logout = () => {
+    setState({ jwt: "", user: {}, account: {}, currentUserId: null });
+    localStorage.removeItem("id_token");
+    localStorage.removeItem("id_token_acc");
+    navigate("/login")
+  }
+
   return (
     <div>
       <Grid container>
@@ -69,7 +113,7 @@ export default function Admin() {
             <h2>{account.companyName}</h2>
           </div>
         </Grid>
-        <Grid item md={8} xs={12}>
+        <Grid item md={8} xs={12} style={{marginTop: 40}}>
           <div style={{ textAlign: "left" }}>
             <h1>Finanicals</h1>
             <p>We're standing by to help. Contact the team at team@blocksend.co</p>
@@ -84,23 +128,15 @@ export default function Admin() {
               <div>
                 <span style={{ fontWeight: "lighter", fontSize: 30 }}>$</span><span style={{ fontWeight: "bold", fontSize: 45 }}>{(account.balance / 100).toFixed(2)}</span>
                 <p style={{ cursor: "pointer" }}>Fund account</p>
+                <p style={{ cursor: "pointer" }} onClick={() => logout()}>Logout</p>
               </div>
             </Grid>
             <Grid item xs={12} className="adminBlock">
-              <Card>
-                <h3>Transfers</h3>
-                {transfers.map((t) => (
-                  <div>
-                    <p>
-                      Sent {t.User.name} ${(t.amount / 100).toFixed(2)}
-                    </p>
-                    <p>Email: {t.User.email}</p>
-                    <p>Link: app.blocksend.co/redeem/{t.link}</p>
-                    <p>{t.redeemedAt ? "Redeemed" : "Not Redeemed"}</p>
-                    <hr></hr>
-                  </div>
-                ))}
-              </Card>
+              <h1 style={{ textAlign: "left" }}>Transfers</h1>
+              {gridHeaders}
+              {transfers.map((t) => (
+                renderRow(t)
+              ))}
             </Grid>
           </Grid>
         </Grid>
