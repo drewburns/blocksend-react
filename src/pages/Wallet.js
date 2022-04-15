@@ -99,12 +99,23 @@ export default function Wallet(props) {
     p: 4,
   };
 
+  const logout = () => {
+    setState({ jwt: "", user: {}, account: {}, currentUserId: null });
+    localStorage.removeItem("id_token");
+    localStorage.removeItem("id_token_acc");
+    navigate("/login")
+  }
+
   if (showLogin) {
     return <Login />;
   }
 
   return (
     <Grid container>
+      <Grid item xs={12}>
+        <h1>My wallet</h1>
+        <Button onClick={() => logout()}>Logout</Button>
+      </Grid>
       <Modal
         open={open}
         onClose={() => setOpen(false)}

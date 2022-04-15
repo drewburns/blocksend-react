@@ -74,7 +74,8 @@ export default function Send(props) {
   }
   return (
     <Grid container>
-      <Grid item xs={12}>
+      <Grid item xs={2}></Grid>
+      <Grid item xs={8}>
         <h3>
           <i>Subject to gas and tx fees</i>
         </h3>
@@ -82,6 +83,7 @@ export default function Send(props) {
           <TextField
             type="number"
             value={amount}
+            fullWidth
             onChange={(e) => setAmount(Math.round(e.target.value * 100) / 100)}
             id="outlined-basic"
             label="Amount (USD)"
@@ -93,6 +95,7 @@ export default function Send(props) {
           <TextField
             type="email"
             value={email}
+            fullWidth
             placeholder="joe@smith.com"
             id="email"
             onChange={(e) => setEmail(e.target.value)}
@@ -105,6 +108,7 @@ export default function Send(props) {
             type="name"
             value={receiverName}
             placeholder="Their name"
+            fullWidth
             id="email"
             onChange={(e) => setReceiverName(e.target.value)}
             label="Their name"
@@ -116,13 +120,9 @@ export default function Send(props) {
           <h3>Loading...</h3>
         ) : (
           <div className="formBlock">
-            {email && amount && receiverName ? (
-              <Button variant="contained" onClick={() => sendCrypto()}>
-                Send
-              </Button>
-            ) : (
-              <h3>Please fill out all fields</h3>
-            )}
+            <Button fullWidth disabled={!(email && amount && receiverName)} variant="contained" onClick={() => sendCrypto()}>
+              Send
+            </Button>
           </div>
         )}
       </Grid>

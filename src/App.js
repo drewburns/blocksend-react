@@ -48,21 +48,6 @@ function App() {
   };
   return (
     <div className="App">
-      {window.location.pathname !== "/demo/widget" && (
-        <React.Fragment>
-          <h1>BlockSend</h1>
-          <Button onClick={() => getDestination()}>{getButtonLabel()}</Button>
-          {!state.jwt && (
-            <Button onClick={() => navigate("/adminLogin")}>Admin Login</Button>
-          )}
-          {state.jwt && <Button onClick={() => logout()}>Logout</Button>}
-          {/* {state.jwt && <p>Logged in as {state.user.email}</p>} */}
-        </React.Fragment>
-      )}
-      {/* <Grid container>
-        <Grid item xs={3} />
-        <Grid item xs={6}></Grid>
-      </Grid> */}
 
       <Routes>
         <Route exact path="/" element={<Wallet />} />
@@ -80,3 +65,16 @@ function App() {
 }
 
 export default App;
+
+
+// {window.location.pathname !== "/demo/widget" && (
+//   <React.Fragment>
+//     {/* <h1>BlockSend</h1> */}
+//     <Button onClick={() => getDestination()}>{getButtonLabel()}</Button>
+//     {!state.jwt && (
+//       <Button onClick={() => navigate("/adminLogin")}>Admin Login</Button>
+//     )}
+//     {state.jwt && <Button onClick={() => logout()}>Logout</Button>}
+//     {/* {state.jwt && <p>Logged in as {state.user.email}</p>} */}
+//   </React.Fragment>
+// )}
