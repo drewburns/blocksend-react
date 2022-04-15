@@ -5,6 +5,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../utility/GlobalContext";
 import Send from "./Send";
+import logo from "../images/logo.png"
 
 export default function Admin() {
   const { state, setState } = React.useContext(GlobalContext);
@@ -47,52 +48,95 @@ export default function Admin() {
       .catch((err) => {
         // handle 400 errors
         if (err.response.status === 403 || err.response.status === 401) {
-        //   localStorage.removeItem("id_token_acc");
-        //   setState({ jwt: null, account: {} });
-        //   navigate("/adminLogin");
-        //   alert("Login again");
+          //   localStorage.removeItem("id_token_acc");
+          //   setState({ jwt: null, account: {} });
+          //   navigate("/adminLogin");
+          //   alert("Login again");
         }
       });
   };
+  const gridHeaders = (
+    <React.Fragment>
+      <Grid container>
+        <Grid item xs={3}>
+          <b>Date</b>
+        </Grid>
+        <Grid item xs={5}>
+          <b> Description</b>
+        </Grid>
+        <Grid item xs={2}>
+          <b>Amount</b>
+        </Grid>
+        <Grid item xs={2}>
+          <b>Redeemed?</b>
+        </Grid>
+      </Grid>
+    </React.Fragment>
+  )
 
+  const renderRow = (t) => {
+    return (
+      <Grid container style={{ height: 50, backgroundColor: "#E5F6DF", justifyContent: "center", display: 'flex', alignItems: "center" }}>
+        <Grid item xs={3}>
+          {new Date(t.createdAt).toLocaleDateString()}
+        </Grid>
+        <Grid item xs={5}>
+          Transfer to {t.User.name} at {t.User.email}
+        </Grid>
+        <Grid item xs={2}>
+          ${(t.amount / 100).toFixed(2)}
+        </Grid>
+        <Grid item xs={2}>
+          {t.redeemedAt ? "✅" : "⏱"}
+        </Grid>
+        {/* <p>Link: app.blocksend.co/redeem/{t.link}</p> */}
+      </Grid >)
+  }
   const subtractBalance = (amount) => {
     getTransfers();
     setAccount({ ...account, balance: account.balance - amount });
   };
+
+  const logout = () => {
+    setState({ jwt: "", user: {}, account: {}, currentUserId: null });
+    localStorage.removeItem("id_token");
+    localStorage.removeItem("id_token_acc");
+    navigate("/login")
+  }
+
   return (
     <div>
       <Grid container>
-        <Grid item md={1}></Grid>
-        <Grid item md={10} xs={12}>
+        <Grid item md={2}>
+          <div style={{ marginTop: 50 }}>
+            <img src={logo} style={{ height: 80 }} />
+            <h2>{account.companyName}</h2>
+          </div>
+        </Grid>
+        <Grid item md={8} xs={12} style={{marginTop: 40}}>
+          <div style={{ textAlign: "left" }}>
+            <h1>Finanicals</h1>
+            <p>We're standing by to help. Contact the team at team@blocksend.co</p>
+          </div>
           <Grid container>
             <Grid item xs={6} className="adminBlock">
-              <Card>
-                <h3>Send</h3>
-                <Send subtractBalance={subtractBalance} />
-              </Card>
+              <h1>Send Crypto</h1>
+              <Send subtractBalance={subtractBalance} />
             </Grid>
             <Grid item xs={6} className="adminBlock">
-              <Card>
-                <h3>Transfers</h3>
-                {transfers.map((t) => (
-                  <div>
-                    <p>
-                      Sent {t.User.name} ${(t.amount / 100).toFixed(2)}
-                    </p>
-                    <p>Email: {t.User.email}</p>
-                    <p>Link: app.blocksend.co/redeem/{t.link}</p>
-                    <p>{t.redeemedAt ? "Redeemed" : "Not Redeemed"}</p>
-                    <hr></hr>
-                  </div>
-                ))}
-              </Card>
+              <h3>Account Balance</h3>
+              <div>
+                <span style={{ fontWeight: "lighter", fontSize: 30 }}>$</span><span style={{ fontWeight: "bold", fontSize: 45 }}>{(account.balance / 100).toFixed(2)}</span>
+                <p style={{ cursor: "pointer" }}>Fund account</p>
+                <p style={{ cursor: "pointer" }} onClick={() => logout()}>Logout</p>
+              </div>
             </Grid>
-            <Grid item xs={6} className="adminBlock">
-              <Card>
-                <h3>Account</h3>
-                <h4>Company name: {account.companyName}</h4>
-                <h4>Current Balance: ${(account.balance / 100).toFixed(2)}</h4>
-              </Card>
+            <Grid item xs={12} className="adminBlock">
+              <h1 style={{ textAlign: "left" }}>Transfers</h1>
+              {gridHeaders}
+              {transfers.map((t) => (
+                renderRow(t)
+              ))}
             </Grid>
           </Grid>
         </Grid>
