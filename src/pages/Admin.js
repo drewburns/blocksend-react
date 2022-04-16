@@ -115,7 +115,7 @@ export default function Admin() {
         </Grid>
         <Grid item md={8} xs={12} style={{marginTop: 40}}>
           <div style={{ textAlign: "left" }}>
-            <h1>Finanicals</h1>
+            <h1>Financials</h1>
             <p>We're standing by to help. Contact the team at team@blocksend.co</p>
           </div>
           <Grid container>
