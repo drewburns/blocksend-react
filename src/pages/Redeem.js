@@ -57,7 +57,7 @@ export default function Redeem(props) {
         setSenderName(res.data.senderName);
         // setVerifyCode(res.data.code);
         if (res.data.transfer.redeemedAt) {
-          alert("already redeemed");
+          // alert("already redeemed");
           navigate("/");
         }
       })
@@ -171,7 +171,7 @@ export default function Redeem(props) {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: 200,
     bgcolor: "background.paper",
     boxShadow: 24,
     p: 4,
