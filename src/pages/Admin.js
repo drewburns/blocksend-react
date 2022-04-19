@@ -2,7 +2,7 @@ import { Card, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { GlobalContext } from "../utility/GlobalContext";
 import Send from "./Send";
 import logo from "../images/logo.png"
@@ -116,7 +116,7 @@ export default function Admin() {
         <Grid item md={8} xs={12} style={{marginTop: 40}}>
           <div style={{ textAlign: "left" }}>
             <h1>Financials</h1>
-            <p>We're standing by to help. Contact the team at team@blocksend.co</p>
+            <p>Contact the team at team@blocksend.co if any questions</p>
           </div>
           <Grid container>
             <Grid item xs={6} className="adminBlock">
@@ -127,7 +127,9 @@ export default function Admin() {
               <h3>Account Balance</h3>
               <div>
                 <span style={{ fontWeight: "lighter", fontSize: 30 }}>$</span><span style={{ fontWeight: "bold", fontSize: 45 }}>{(account.balance / 100).toFixed(2)}</span>
-                <p style={{ cursor: "pointer" }}>Fund account</p>
+                <a href="#" onClick={() => window.open('mailto:team@blocksend.co?subject=Account Funding&body=Hey there - I want to fund my account by x USD')}>
+                  <p style={{color: '#333', textDecoration: 'none'}}>Fund account</p>
+                </a>
                 <p style={{ cursor: "pointer" }} onClick={() => logout()}>Logout</p>
               </div>
             </Grid>

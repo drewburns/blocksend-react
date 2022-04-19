@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Grid, Button, TextField } from "@mui/material";
 import axios from "axios";
 import { GlobalContext } from "../utility/GlobalContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link} from "react-router-dom";
 import headerImage from "../images/loginheader.png"
 export default function Login(props) {
   // const BASE_URL = "http://localhost:8080";
@@ -79,6 +79,7 @@ export default function Login(props) {
                 <div className="formBlock">
                   <TextField
                     type="text"
+                    style={{backgroundColor: '#fff', fontWeight: 'bold'}}
                     value={verifyCode}
                     placeholder="123456"
                     id="verifyCode"
@@ -88,11 +89,11 @@ export default function Login(props) {
                     variant="outlined"
                   />
                 </div>
-                <p><i>Be sure to check your spam</i></p>
+                <p style={{color: '#8492a6', fontWeight: 'bolder'}}><i>Be sure to check your spam</i></p>
                 <div className="formBlock">
                   <Button
                     variant="contained"
-                    style={{ width: 200 }}
+                    style={{ background: '#2190ec', paddingHorizontal: 10, paddingVertical: 7, color: 'white', fontWeight: 'bold', borderRadius: '13' }}
                     size="large"
                     disabled={!verifyCode || loading}
                     onClick={verifyLogin}
@@ -107,6 +108,8 @@ export default function Login(props) {
                   <TextField
                     type="text"
                     value={email}
+                    style={{backgroundColor: '#fff', fontWeight: 'bold'}}
+
                     // style={{ paddingLeft: 80, paddingRight: 80 }}
                     placeholder="joe@smith.com"
                     fullWidth
@@ -121,7 +124,7 @@ export default function Login(props) {
                     variant="contained"
                     disabled={!email || loading}
                     size="large"
-                    style={{ width: 200 }}
+                    style={{ background: '#2190ec', paddingHorizontal: 10, paddingVertical: 7, color: 'white', fontWeight: 'bold', borderRadius: '13' }}
                     onClick={sendCode}
                   >
                     Continue
@@ -129,9 +132,14 @@ export default function Login(props) {
                 </div>
               </React.Fragment>
             )}
-            <div style={{ marginTop: 60, color: "black", cursor: "pointer" }} onClick={() => ISADMIN ? navigate("/login") : navigate("/adminLogin")}>
+            <div style={{ marginTop: 60, color: "#333", cursor: "pointer", fontSize: 12 }} onClick={() => ISADMIN ? navigate("/login") : navigate("/adminLogin")}>
               <p>{ISADMIN ? "Login as user" : "Login to admin"}</p>
             </div>
+            <Link to = "/" >
+              <div style={{ color: "#333", cursor: "pointer", fontSize: 12 }}>
+                <p>What is BlockSend</p>
+              </div>
+            </Link>
           </Grid>
         </Grid>
       </Grid>
