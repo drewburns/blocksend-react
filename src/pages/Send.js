@@ -76,15 +76,15 @@ export default function Send(props) {
     <Grid container>
       <Grid item xs={2}></Grid>
       <Grid item xs={8}>
-        <h3>
-          <i>Subject to gas and tx fees</i>
-        </h3>
+        {/*<h3>*/}
+        {/*  <i>Subject to gas and tx fees</i>*/}
+        {/*</h3>*/}
         <div className="formBlock">
           <TextField
-            type="number"
+            type="text"
             value={amount}
             fullWidth
-            onChange={(e) => setAmount(Math.round(e.target.value * 100) / 100)}
+            onChange={(e) => setAmount(e.target.value)}
             id="outlined-basic"
             label="Amount (USD)"
             variant="outlined"
@@ -111,7 +111,7 @@ export default function Send(props) {
             fullWidth
             id="email"
             onChange={(e) => setReceiverName(e.target.value)}
-            label="Their name"
+            label="Receiver name"
             variant="outlined"
           />
         </div>
