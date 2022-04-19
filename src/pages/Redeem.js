@@ -204,8 +204,8 @@ export default function Redeem(props) {
         </Box>
       </Modal>
       <Grid container>
-        <Grid item xs={3} />
-        <Grid item xs={6}>
+        <Grid item md={3} />
+        <Grid item xs={12} md={6}>
           <Card>
             <h3>
               {senderName} sent you ${(transfer.amount / 100).toFixed(2)}!
