@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Grid, Button, TextField } from "@mui/material";
 import axios from "axios";
 import { GlobalContext } from "../utility/GlobalContext";
-import { useNavigate, Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import headerImage from "../images/loginheader.png"
 export default function Login(props) {
   // const BASE_URL = "http://localhost:8080";
@@ -44,6 +44,13 @@ export default function Login(props) {
     axios
       .post(BASE_URL + url, data)
       .then((res) => {
+        if (props.hideHeader) {
+          setState({ jwt: res.data.token, user: res.data.user });
+          localStorage.setItem("id_token", res.data.token);
+          localStorage.removeItem("id_token_acc");
+          props.tryToRedeem(res.data.token)
+          return;
+        }
         if (res.data.account) {
           setLoading(false);
           setState({ jwt: res.data.token, account: res.data.account });
@@ -67,9 +74,13 @@ export default function Login(props) {
     <Grid container>
       <Grid item md={3} xs={1} />
       <Grid item md={6} xs={10} style={{ justifyContent: "center", alignContent: "center" }}>
-        <img src={headerImage} style={{height: 140, marginTop: 30}} />
-        <h3 style={{ fontSize: 25, marginTop: 30 }}>Sign into</h3>
-        <h1 style={{ fontSize: 45, marginTop: -20 }}>Blocksend {ISADMIN && "Admin"}</h1>
+        {!props.hideHeader &&
+          <React.Fragment>
+            <img src={headerImage} style={{ height: 140, marginTop: 30 }} />
+            <h3 style={{ fontSize: 25, marginTop: 30 }}>Sign into</h3>
+            <h1 style={{ fontSize: 45, marginTop: -20 }}>Blocksend {ISADMIN && "Admin"}</h1>
+          </React.Fragment>
+        }
         <Grid container>
           <Grid item md={3} xs={1}></Grid>
           <Grid item xs={10} md={6}>
@@ -79,7 +90,7 @@ export default function Login(props) {
                 <div className="formBlock">
                   <TextField
                     type="text"
-                    style={{backgroundColor: '#fff', fontWeight: 'bold'}}
+                    style={{ backgroundColor: '#fff', fontWeight: 'bold' }}
                     value={verifyCode}
                     placeholder="123456"
                     id="verifyCode"
@@ -89,7 +100,7 @@ export default function Login(props) {
                     variant="outlined"
                   />
                 </div>
-                <p style={{color: '#8492a6', fontWeight: 'bolder'}}><i>Be sure to check your spam</i></p>
+                <p style={{ color: '#8492a6', fontWeight: 'bolder' }}><i>Be sure to check your spam</i></p>
                 <div className="formBlock">
                   <Button
                     variant="contained"
@@ -108,7 +119,7 @@ export default function Login(props) {
                   <TextField
                     type="text"
                     value={email}
-                    style={{backgroundColor: '#fff', fontWeight: 'bold'}}
+                    style={{ backgroundColor: '#fff', fontWeight: 'bold' }}
 
                     // style={{ paddingLeft: 80, paddingRight: 80 }}
                     placeholder="joe@smith.com"
@@ -132,14 +143,18 @@ export default function Login(props) {
                 </div>
               </React.Fragment>
             )}
-            <div style={{ marginTop: 60, color: "#333", cursor: "pointer", fontSize: 12 }} onClick={() => ISADMIN ? navigate("/login") : navigate("/adminLogin")}>
-              <p>{ISADMIN ? "Login as user" : "Login to admin"}</p>
-            </div>
-            <Link to = "/" >
-              <div style={{ color: "#333", cursor: "pointer", fontSize: 12 }}>
-                <p>What is BlockSend</p>
-              </div>
-            </Link>
+            {!props.hideHeader &&
+              <React.Fragment>
+                <div style={{ marginTop: 60, color: "#333", cursor: "pointer", fontSize: 12 }} onClick={() => ISADMIN ? navigate("/login") : navigate("/adminLogin")}>
+                  <p>{ISADMIN ? "Login as user" : "Login to admin"}</p>
+                </div>
+                <Link to="/" >
+                  <div style={{ color: "#333", cursor: "pointer", fontSize: 12 }}>
+                    <p>What is BlockSend</p>
+                  </div>
+                </Link>
+              </React.Fragment>
+            }
           </Grid>
         </Grid>
       </Grid>

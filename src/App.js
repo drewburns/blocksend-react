@@ -9,6 +9,7 @@ import Widget from "./pages/Widget";
 import { GlobalContext } from "./utility/GlobalContext";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
+import Giveaway from "./pages/Giveaway";
 
 function App() {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ function App() {
 
       <Routes>
         <Route exact path="/" element={<Wallet />} />
+        <Route exact path="/ycgiveaway" element={<Giveaway />} />
         <Route path="/redeem/:id" element={<Redeem />} />
         {/* <Route path="/demo/wallet" element={<Wallet fake />} /> */}
         {/* <Route path="/demo/redeem" element={<Redeem fake />} /> */}
