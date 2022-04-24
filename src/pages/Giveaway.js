@@ -45,15 +45,17 @@ export default function Giveaway() {
                             <Button variant="contained" onClick={() => {
                                 window.location.href = "https://blocksend.co/integration.html";
                                 return null;
-                            }}>Get in touch with us</Button>
+                            }}>but you can still use our api</Button>
                         </div>
                     </React.Fragment>
                 }
-                <h3><a style={{ color: "black" }} href="https://blocksend.readme.io/reference/upsert-user">Read the docs</a></h3>
             </Grid>
             {amountLeft > 0 &&
                 <Login hideHeader admin={false} tryToRedeem={tryToRedeem} />
             }
+            <Grid item xs={12}>
+                <h3 style={{ textAlign: "center" }}><a style={{ color: "black" }} href="https://blocksend.readme.io/reference/upsert-user">Read the docs</a></h3>
+            </Grid>
         </Grid >
 
     )
