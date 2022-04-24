@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 import axios from 'axios'
 import React from 'react'
 import { useNavigate, Link } from "react-router-dom";
@@ -15,6 +15,7 @@ export default function Giveaway() {
     const getBalanceLeft = () => {
         axios.get("https://api.blocksend.co/transfer/amountLeft").then((res) => {
             setAmountLeft(res.data)
+            // setAmountLeft(0)
         })
     }
 
@@ -36,11 +37,24 @@ export default function Giveaway() {
                 <h3 style={{ fontSize: 25, marginTop: 30 }}>Blocksend YC Giveaway</h3>
                 {/* <h3>Amount Left: ${(amountLeft / 100).toFixed()}</h3> */}
                 <hr></hr>
-                <h2>Claim my $10!</h2>
+                {amountLeft > 0 ?
+                    <h2>Claim my $10!</h2> :
+                    <React.Fragment>
+                        <div>
+                            <h2>Sorry giveaway is over :(</h2>
+                            <Button variant="contained" onClick={() => {
+                                window.location.href = "https://blocksend.co/integration.html";
+                                return null;
+                            }}>Get in touch with us</Button>
+                        </div>
+                    </React.Fragment>
+                }
+                <h3><a style={{ color: "black" }} href="https://blocksend.readme.io/reference/upsert-user">Read the docs</a></h3>
             </Grid>
-
-            <Login hideHeader admin={false} tryToRedeem={tryToRedeem} />
-        </Grid>
+            {amountLeft > 0 &&
+                <Login hideHeader admin={false} tryToRedeem={tryToRedeem} />
+            }
+        </Grid >
 
     )
 }

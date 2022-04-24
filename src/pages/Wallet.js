@@ -30,7 +30,7 @@ export default function Wallet(props) {
   const [loading, setLoading] = React.useState(false);
   let navigate = useNavigate();
   React.useEffect(() => {
-    if (state.account &&state.account.id) {
+    if (state.account && state.account.id) {
       navigate("/admin")
     }
     getHoldings();
@@ -128,7 +128,7 @@ export default function Wallet(props) {
         <Box sx={style}>
           <h3>Enter your info</h3>
           <h3>
-            <i>Fees will be subtracted</i>
+            <i>Fees will be subtracted (expect your transaction within 1 day)</i>
           </h3>
           <TextField
             type="text"
