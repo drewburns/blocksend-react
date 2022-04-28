@@ -52,7 +52,7 @@ function App() {
 
       <Routes>
         <Route exact path="/" element={<Wallet />} />
-        <Route exact path="/ycgiveaway" element={<Giveaway />} />
+        <Route exact path="/hngiveaway" element={<Giveaway />} />
         <Route path="/redeem/:id" element={<Redeem />} />
         {/* <Route path="/demo/wallet" element={<Wallet fake />} /> */}
         {/* <Route path="/demo/redeem" element={<Redeem fake />} /> */}

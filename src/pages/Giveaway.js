@@ -34,7 +34,7 @@ export default function Giveaway() {
             <Grid item md={3} xs={1} />
             <Grid item md={6} xs={10} style={{ justifyContent: "center", alignContent: "center" }}>
                 <img src={headerImage} style={{ height: 140, marginTop: 30 }} />
-                <h3 style={{ fontSize: 25, marginTop: 30 }}>Blocksend YC Giveaway</h3>
+                <h3 style={{ fontSize: 25, marginTop: 30 }}>Blocksend HN Giveaway</h3>
                 {/* <h3>Amount Left: ${(amountLeft / 100).toFixed()}</h3> */}
                 <hr></hr>
                 {amountLeft > 0 ?
